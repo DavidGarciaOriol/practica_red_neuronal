@@ -12,10 +12,6 @@ import matplotlib.pyplot as plt
 celsius = np.array([-40, -10, 0, 8, 15, 22, 38], dtype = float)
 fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype = float)
 
-## HISTORIAL ##
-
-historial = ""
-
 ## VARIABLES DE LA RED ##
 
 capa = tf.keras.layers.Dense(units=1, input_shape=[1])
@@ -26,19 +22,19 @@ modelo.compile(optimizer = tf.keras.optimizers.Adam(0.1), loss="mean_squared_err
 ## FUNCIONES DE LA RED ##
 
 def entrenar_red():
-    global historial
     print("Comenzando entrenamiento...")
     historial = modelo.fit(celsius, fahrenheit, epochs=1000, verbose=False)
     print("¡Modelo entrenado!")
 
-def mostrar_grafico_historial():
+    # MOSTRAR GRÁFICO HISTORIAL #
+
     plt.xlabel("# Época")
     plt.ylabel("Magnitud de pérdida")
     plt.plot(historial.history["loss"])
 
-def hacer_prediccion():
+def hacer_prediccion(celsius):
     print("Predicción: ")
-    resultado = modelo.predict([100.0])
+    resultado = modelo.predict([celsius])
     print(f"Resultado: {str(resultado)} fahrenheit.")
 
 def mostrar_variables_modelo():
@@ -48,10 +44,8 @@ def mostrar_variables_modelo():
 
 ## EJECUTAR FUNCIONES ##
 
-# entrenar_red()
+entrenar_red()
 
-# mostrar_grafico_historial()
+hacer_prediccion(100)
 
-# hacer_prediccion()
-
-# mostrar_variables_modelo()
+mostrar_variables_modelo()
